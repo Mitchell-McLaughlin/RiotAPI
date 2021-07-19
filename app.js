@@ -2,7 +2,20 @@ const express = require('express');
 var https = require('https');
 const app = express();
 var host = 'https://na1.api.riotgames.com/lol/';
-var apiKey = 'RGAPI-a8281754-1d0d-4a91-ae49-ac7a0d7c36a7';
+var apiKey = 'RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99';
+
+
+app.use(function (req, res, next) {
+    
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Credentials", true);
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-www-form-urlencoded, Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    next();
+  });
 
 //ROUTES
 app.get('/', (req, res) => {
@@ -13,11 +26,11 @@ app.get('/', (req, res) => {
         headers: {
             'Accept': 'application/json',
             'Accept-Charset': 'utf-8',
-            'X-Riot-Token': 'RGAPI-a8281754-1d0d-4a91-ae49-ac7a0d7c36a7'
+            'X-Riot-Token': 'RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99'
         }
     };
     request.get(options,function(error,response,body){
-        res.append('X-Riot-Token','RGAPI-a8281754-1d0d-4a91-ae49-ac7a0d7c36a7');
+        res.append('X-Riot-Token','RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99');
            if(error){
                  console.log(error);
                  res.send(error);
@@ -30,24 +43,58 @@ app.get('/', (req, res) => {
 
 
 app.get('/GetRiotAccount', (req, res) => {
+    //res.setHeader('Access-Control-Allow-Origin', '*');
+    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     var request=require("request");
     const options = {
-        url: 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Gazzwaka',
+        url: 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Immortal Mitch',
         method: 'GET',
         headers: {
             'Accept': 'application/json',
             'Accept-Charset': 'utf-8',
-            'X-Riot-Token': 'RGAPI-a8281754-1d0d-4a91-ae49-ac7a0d7c36a7'
+            'X-Riot-Token': 'RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99'
         }
     };
+    
     request.get(options,function(error,response,body){
-        res.append('X-Riot-Token','RGAPI-a8281754-1d0d-4a91-ae49-ac7a0d7c36a7');
+        res.append('X-Riot-Token','RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99');
            if(error){
                  console.log(error);
+                 res.setHeader("Access-Control-Allow-Credentials", "true");
+                 res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+                 res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
                  res.send(error);
            }else{
-                 console.log(response);
-                 res.send(response);
+                 console.log("[" + response.body + "]");
+                 res.send(response.body);
+         }
+        });
+});
+
+app.get('/MatchListByAccount', (req, res) => {
+    //res.setHeader('Access-Control-Allow-Origin', '*');
+    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    var request=require("request");
+    const options = {
+        url: 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/6Qgbp2rkw34VNYjGsOeEVVOe9q_ngHb0atsSg3es8zbv4Q',
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Accept-Charset': 'utf-8',
+            'X-Riot-Token': 'RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99'
+        }
+    };
+    
+    request.get(options,function(error,response,body){
+        res.append('X-Riot-Token','RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99');
+           if(error){
+                 console.log(error);
+                res.send(error);
+           }else{
+                const parsedData = JSON.parse(response.body);
+                let result = parsedData.matches;
+                 console.log(result);
+                 res.send(result);
          }
         });
 });
