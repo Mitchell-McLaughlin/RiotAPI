@@ -3,7 +3,7 @@ var https = require('https');
 const app = express();
 var host = 'https://na1.api.riotgames.com/lol/';
 var apiKey = 'RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99';
-
+const port = process.env.PORT || 3000
 
 app.use(function (req, res, next) {
     
@@ -100,4 +100,4 @@ app.get('/MatchListByAccount', (req, res) => {
 });
 
 //Listening to the server
-app.listen(3000);
+app.listen(port, () => console.log('listening on port ${port}'));
