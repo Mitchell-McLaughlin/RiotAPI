@@ -55,6 +55,37 @@ app.get('/GetRiotAccount', (req, res) => {
             'X-Riot-Token': 'RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99'
         }
     };
+
+    
+    request.get(options,function(error,response,body){
+        res.append('X-Riot-Token','RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99');
+           if(error){
+                 console.log(error);
+                 res.setHeader("Access-Control-Allow-Credentials", "true");
+                 res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+                 res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+                 res.send(error);
+           }else{
+                 console.log("[" + response.body + "]");
+                 res.send(response.body);
+         }
+        });
+});
+
+app.get('/GetRiotAccount/:accountName', (req, res) => {
+    //res.setHeader('Access-Control-Allow-Origin', '*');
+    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    var request=require("request");
+    const options = {
+        url: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${req.params.accountName}`,
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Accept-Charset': 'utf-8',
+            'X-Riot-Token': 'RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99'
+        }
+    };
+
     
     request.get(options,function(error,response,body){
         res.append('X-Riot-Token','RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99');
