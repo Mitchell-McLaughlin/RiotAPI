@@ -5,23 +5,11 @@ var host = 'https://na1.api.riotgames.com/lol/';
 var apiKey = 'RGAPI-4730ecb2-ab17-4802-abcc-7937e56cef99';
 const port = process.env.PORT || 3000
 
-app.use(function (req, res, next) {
-    
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Credentials", true);
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-www-form-urlencoded, Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    next();
-  });
-
-//ROUTES
+/* ROUTES */
 app.get('/', (req, res) => {
     var request=require("request");
     const options = {
-        url: 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/8Oo075uXu-2FwhdQmxuLWDP91pRfzuZPF9onwW2z6pMU8O01yOEOt9bGn',
+        url: `${host}match/v4/matchlists/by-account/8Oo075uXu-2FwhdQmxuLWDP91pRfzuZPF9onwW2z6pMU8O01yOEOt9bGn`,
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -43,11 +31,9 @@ app.get('/', (req, res) => {
 
 
 app.get('/GetRiotAccount', (req, res) => {
-    //res.setHeader('Access-Control-Allow-Origin', '*');
-    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     var request=require("request");
     const options = {
-        url: 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Immortal Mitch',
+        url: `${host}summoner/v4/summoners/by-name/Immortal Mitch`,
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -73,11 +59,9 @@ app.get('/GetRiotAccount', (req, res) => {
 });
 
 app.get('/GetRiotAccount/:accountName', (req, res) => {
-    //res.setHeader('Access-Control-Allow-Origin', '*');
-    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     var request=require("request");
     const options = {
-        url: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${req.params.accountName}`,
+        url: `${host}summoner/v4/summoners/by-name/${req.params.accountName}`,
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -103,8 +87,6 @@ app.get('/GetRiotAccount/:accountName', (req, res) => {
 });
 
 app.get('/MatchListByAccount', (req, res) => {
-    //res.setHeader('Access-Control-Allow-Origin', '*');
-    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     var request=require("request");
     const options = {
         url: 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/6Qgbp2rkw34VNYjGsOeEVVOe9q_ngHb0atsSg3es8zbv4Q',
